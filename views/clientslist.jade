@@ -1,0 +1,8 @@
+extends layout
+block content
+    h1.
+        Clients List
+    ul
+        each client, i in allclients
+            li
+                a(href="mailto:#{client.phone}")= client.name

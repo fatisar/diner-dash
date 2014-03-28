@@ -1,0 +1,8 @@
+extends layout
+block content
+    h1= title
+    form#formAddUser(name="addclient",method="post",action="/addclient")
+        input#inputRestaurantName(type="text", placeholder="name", name="name")
+        input#inputRestaurantAddress(type="text", placeholder="address", name="address")
+        input#inputRestaurantPhoneNumber(type="text", placeholder="phone", name="phone")
+        button#btnSubmit(type="submit") submit
