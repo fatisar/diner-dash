@@ -1,7 +1,84 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        link(rel='shortcut icon', href='../../assets/ico/favicon.ico')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        // Bootstrap core CSS
+        link(href='/stylesheets/bootstrap.min.css', rel='stylesheet')
+        link(href='/stylesheets/dashboard.css', rel='stylesheet')
+
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
+        script(src='/javascripts/bootstrap.min.js')
+
+        script(src="/javascripts/amcharts/amcharts.js", type="text/javascript")
+        script(src="/javascripts/amcharts/serial.js", type="text/javascript")
+        script(src="/javascripts/amcharts/pie.js", type="text/javascript")
+        script(src="/javascripts/amcharts/themes/light.js", type="text/javascript")
+        script(src="/javascripts/jquery.easypiechart.min.js", type="text/javascript")
+
+        title= title
+    body
+        .container
+            .navbar.navbar-default.navbar-fixed-top(role='navigation')
+                .container
+                    .navbar-header
+                        button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+                            span.sr-only Toggle navigation
+                            span.icon-bar
+                            span.icon-bar
+                            span.icon-bar
+                        a.navbar-brand(href='/')= title
+                    .collapse.navbar-collapse
+                        ul.nav.navbar-nav
+                            li#home-menu
+                                a(href='/') Home
+                            li#food-menu.dropdown
+                                a.dropdown-toggle.disabled(href='food', data-toggle='dropdown')
+                                    | Food
+                                    b.caret
+                                ul.dropdown-menu(role='nav-menu')
+                                    each menu in navmenus
+                                        li
+                                            a(href='menu/'+menu.id)= menu.title
+                                    li.divider
+                                    li.dropdown-header Manage
+                                    li
+                                        a(href='#') Add new menu
+                                    li
+                                        a(href='#') Create special discount
+                            li#dashboard-menu.dropdown
+                                a.dropdown-toggle.disabled(href='dashboard', data-toggle='dropdown')
+                                    | Data
+                                    b.caret
+                                ul.dropdown-menu(role='nav-menu')
+                                    li
+                                        a(href='/dashboard') Dashboard
+                                    li.divider
+                                    li
+                                        a(href='/inventory/manage') Manage inventory
+                                    li
+                                        a(href='/data') Export data
+                        form.nav.navbar-form.navbar-right(role='form')
+                            .form-group
+                                input.form-control(type='text', placeholder='Email')
+                            .form-group
+                                input.form-control(type='password', placeholder='Password')
+                            button.btn.btn-success(type='submit') Sign in
+        block content
+        script.
+            $(function() {
+                $('.dropdown').removeClass('active')
+                var currentTopLevel = location.pathname.split("/")[1].trim()
+                if (currentTopLevel == "")
+                    $('#home-menu').addClass('active')
+                else
+                    $('#' + currentTopLevel + '-menu').addClass('active')
+            });
+    #footer
+       .container
+           p.text-muted Footer content

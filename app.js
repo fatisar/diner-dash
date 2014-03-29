@@ -6,11 +6,12 @@
 var express = require('express');
 var routes = require('./routes');
 var clients = require('./routes/clients')
+var dashboard = require('./routes/dashboard')
+var food = require('./routes/food')
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 
-var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/dinerdash');
 
@@ -35,8 +36,19 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+
+// load up the client's menus and store them globally for nav access
+client = {name: 'DeLuxe Bar and Grill'}
+var menuCollection = db.get('menus');
+menuCollection.find({},{},function(e,menus){
+    app.locals({
+        'navmenus' : menus
+    })
+});
+
 app.get('/', routes.index);
-app.get('/hello', routes.helloworld);
+app.get('/food', food.menus);
+app.get('/dashboard', dashboard.dashboard)
 app.get('/users', user.list);
 app.get('/clients', clients.clients(db));
 app.get('/newclient', clients.newclient);

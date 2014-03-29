@@ -1,5 +1,129 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    //.jumbotron
+    //    .container
+    //        h1 Hello, world!
+    //        p
+    //            | This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.
+    //        p
+    //            a.btn.btn-primary.btn-lg(role='button') Learn more »
+
+    div(style="width: 640px; height: 400px;")#chartdiv
+
+    script.
+        var chartData = [
+            {'hour':'0', 'traffic':7500},
+            {'hour':'1', 'traffic':7599},
+            {'hour':'2', 'traffic':7696},
+            {'hour':'3', 'traffic':7791},
+            {'hour':'4', 'traffic':7884},
+            {'hour':'5', 'traffic':7975},
+            {'hour':'6', 'traffic':8064},
+            {'hour':'7', 'traffic':8151},
+            {'hour':'8', 'traffic':8236},
+            {'hour':'9', 'traffic':8319},
+            {'hour':'10', 'traffic':8400},
+            {'hour':'11', 'traffic':8479},
+            {'hour':'12', 'traffic':8556},
+            {'hour':'13', 'traffic':8631},
+            {'hour':'14', 'traffic':8704},
+            {'hour':'15', 'traffic':8775},
+            {'hour':'16', 'traffic':8844},
+            {'hour':'17', 'traffic':8911},
+            {'hour':'18', 'traffic':8976},
+            {'hour':'19', 'traffic':9039},
+            {'hour':'20', 'traffic':9100},
+            {'hour':'21', 'traffic':9159},
+            {'hour':'22', 'traffic':9216},
+            {'hour':'23', 'traffic':9271},
+            {'hour':'24', 'traffic':9324},
+            {'hour':'25', 'traffic':9375},
+            {'hour':'26', 'traffic':9424},
+            {'hour':'27', 'traffic':9471},
+            {'hour':'28', 'traffic':9516},
+            {'hour':'29', 'traffic':9559},
+            {'hour':'30', 'traffic':9600},
+            {'hour':'31', 'traffic':9639},
+            {'hour':'32', 'traffic':9676},
+            {'hour':'33', 'traffic':9711},
+            {'hour':'34', 'traffic':9744},
+            {'hour':'35', 'traffic':9775},
+            {'hour':'36', 'traffic':9804},
+            {'hour':'37', 'traffic':9831},
+            {'hour':'38', 'traffic':9856},
+            {'hour':'39', 'traffic':9879},
+            {'hour':'40', 'traffic':9900},
+            {'hour':'41', 'traffic':9919},
+            {'hour':'42', 'traffic':9936},
+            {'hour':'43', 'traffic':9951},
+            {'hour':'44', 'traffic':9964},
+            {'hour':'45', 'traffic':9975},
+            {'hour':'46', 'traffic':9984},
+            {'hour':'47', 'traffic':9991},
+            {'hour':'48', 'traffic':9996},
+            {'hour':'49', 'traffic':9999},
+            {'hour':'50', 'traffic':10000},
+            {'hour':'51', 'traffic':9999},
+            {'hour':'52', 'traffic':9996},
+            {'hour':'53', 'traffic':9991},
+            {'hour':'54', 'traffic':9984},
+            {'hour':'55', 'traffic':9975},
+            {'hour':'56', 'traffic':9964},
+            {'hour':'57', 'traffic':9951},
+            {'hour':'58', 'traffic':9936},
+            {'hour':'59', 'traffic':9919},
+            {'hour':'60', 'traffic':9900},
+            {'hour':'61', 'traffic':9879},
+            {'hour':'62', 'traffic':9856},
+            {'hour':'63', 'traffic':9831},
+            {'hour':'64', 'traffic':9804},
+            {'hour':'65', 'traffic':9775},
+            {'hour':'66', 'traffic':9744},
+            {'hour':'67', 'traffic':9711},
+            {'hour':'68', 'traffic':9676},
+            {'hour':'69', 'traffic':9639},
+            {'hour':'70', 'traffic':9600},
+            {'hour':'71', 'traffic':9559},
+            {'hour':'72', 'traffic':9516},
+            {'hour':'73', 'traffic':9471},
+            {'hour':'74', 'traffic':9424},
+            {'hour':'75', 'traffic':9375},
+            {'hour':'76', 'traffic':9324},
+            {'hour':'77', 'traffic':9271},
+            {'hour':'78', 'traffic':9216},
+            {'hour':'79', 'traffic':9159},
+            {'hour':'80', 'traffic':9100},
+            {'hour':'81', 'traffic':9039},
+            {'hour':'82', 'traffic':8976},
+            {'hour':'83', 'traffic':8911},
+            {'hour':'84', 'traffic':8844},
+            {'hour':'85', 'traffic':8775},
+            {'hour':'86', 'traffic':8704},
+            {'hour':'87', 'traffic':8631},
+            {'hour':'88', 'traffic':8556},
+            {'hour':'89', 'traffic':8479},
+            {'hour':'90', 'traffic':8400},
+            {'hour':'91', 'traffic':8319},
+            {'hour':'92', 'traffic':8236},
+            {'hour':'93', 'traffic':8151},
+            {'hour':'94', 'traffic':8064},
+            {'hour':'95', 'traffic':7975},
+            {'hour':'96', 'traffic':7884},
+            {'hour':'97', 'traffic':7791},
+            {'hour':'98', 'traffic':7696},
+            {'hour':'99', 'traffic':7599}];
+
+        AmCharts.ready(function() {
+            var chart = new AmCharts.AmSerialChart();
+            chart.dataProvider = chartData;
+            chart.categoryField = "hour";
+            chart.startDuration = 0.25;
+
+            var graph = new AmCharts.AmGraph();
+            graph.valueField = "traffic";
+            graph.type = "line";
+
+            chart.addGraph(graph);
+            chart.write('chartdiv');
+        });

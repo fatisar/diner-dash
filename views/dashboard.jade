@@ -1,0 +1,174 @@
+extends layout
+
+block content
+    .container-fluid
+        .row
+            .col-sm-3.col-md-2.sidebar
+                ul.nav.nav-sidebar
+                    li.sidebar-item.active
+                        a(href='#glance')
+                            span.glyphicon.glyphicon-eye-open
+                            span At A Glance
+                    li.sidebar-item
+                        a(href='#sales')
+                            span.glyphicon.glyphicon-usd
+                            span Sales
+                    li.sidebar-item
+                        a(href='#traffic')
+                            span.glyphicon.glyphicon-time
+                            span Traffic
+                    li.sidebar-item
+                        a(href='#trends')
+                            span.glyphicon.glyphicon-sort
+                            span Trends
+                    li.sidebar-item
+                        a(href='#suggestions')
+                            span.glyphicon.glyphicon-question-sign
+                            span Suggestions
+                    li.sidebar-item
+                        a(href='#social')
+                            span.glyphicon.glyphicon-comment
+                            span Social
+                    li.sidebar-item
+                        a(href='#stock')
+                            span.glyphicon.glyphicon-check
+                            span Stock
+                ul.nav.nav-sidebar
+                    li.sidebar-item.page-header
+                    li.sidebar-item
+                        a(href='') Manage inventory
+                    li.sidebar-item
+                        a(href='') Export data
+
+            .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+                .jumbotron
+                    .container
+                        h1 Just taking up space
+                        p Having trouble getting the margins/padding just right
+
+                div.section-buffer#glance
+                    h1 At A Glance
+                    p.bg-success.lead How are we doing today?
+                    .page-header
+                    .row.placeholders
+                        .col-xs-6.col-sm-4.placeholder.clearfix
+                            h4 Total daily sales
+                            span.chart
+                                span.glanceChart.percentage#glance-daily-sales-chart(data-percent="100")
+                                    span 1783
+                                span.text-muted Average for Monday's is $1378
+                        .col-xs-6.col-sm-4.placeholder
+                            h4 Sales this hour
+                            span.chart
+                                span.glanceChart.percentage#glance-hourly-sales-chart(data-percent="100")
+                                    span 148
+                                span.text-muted Average for 12p - 1p is $137
+                        .col-xs-6.col-sm-4.placeholder
+                            h4 Customers this hour
+                            span.chart
+                                span.glanceChart.percentage#glance-traffic-chart(data-percent="100")
+                                    span 11
+                                span.text-muted Average for 12p - 1p is 14
+                    h2.sub-header Section title
+
+                div.section-buffer#sales
+                    h1 Sales
+                    p.bg-success.h2.lead Let's take a look at some sales numbers
+                    .page-header
+                    .row.placeholders
+                        .col-xs-6.col-sm-3.placeholder
+                            img.img-responsive(data-src='holder.js/200x200/auto/sky', alt='Generic placeholder thumbnail')
+                            h4 Label
+                            span.text-muted Something else
+                        .col-xs-6.col-sm-3.placeholder
+                            img.img-responsive(data-src='holder.js/200x200/auto/vine', alt='Generic placeholder thumbnail')
+                            h4 Label
+                            span.text-muted Something else
+                        .col-xs-6.col-sm-3.placeholder
+                            img.img-responsive(data-src='holder.js/200x200/auto/sky', alt='Generic placeholder thumbnail')
+                            h4 Label
+                            span.text-muted Something else
+                        .col-xs-6.col-sm-3.placeholder
+                            img.img-responsive(data-src='holder.js/200x200/auto/vine', alt='Generic placeholder thumbnail')
+                            h4 Label
+                            span.text-muted Something else
+                    h2.sub-header Section title
+                    .table-responsive
+                        table.table.table-striped
+                            thead
+                                tr
+                                    th #
+                                    th Header
+                                    th Header
+                                    th Header
+                                    th Header
+                            tbody
+                                tr
+                                    td 1,001
+                                    td Lorem
+                                    td ipsum
+                                    td dolor
+                                    td sit
+                                tr
+                                    td 1,005
+                                    td Nulla
+                                    td quis
+                                    td sem
+                                    td at
+                                tr
+                                    td 1,006
+                                    td nibh
+                                    td elementum
+                                    td imperdiet
+                                    td Duis
+                                tr
+                                    td 1,007
+                                    td sagittis
+                                    td ipsum
+                                    td Praesent
+                                    td mauris
+
+                div.section-buffer#traffic
+                    h1 Traffic
+                    p.bg-success.h2.lead When are people coming in for a bite?
+                    span.page-header
+
+                div.section-buffer#trends
+                    h1 Trends
+                    p.bg-success.h2.lead What foods are selling the most and the least?
+
+                div.section-buffer#suggestions
+                    h1 Suggestions
+                    p.page-header.bg-success.h2.lead What can we do to make things better?
+
+                div.section-buffer#social
+                    h1 Social
+                    p.page-header.bg-success.h2.lead What are people saying about us?
+
+                div.section-buffer#stock
+                    h1 Stock
+                    p.page-header.bg-success.h2.lead Do we have enough inventory in stock?
+
+
+    script $('body').scrollspy({ target: '.sidebar', offset: 80});
+    script.
+        $('#glance-daily-sales-chart').easyPieChart({
+            lineWidth: 25,
+            animate: false,
+            scaleColor: false,
+            barColor: '#58CC6D'
+        });
+
+        $('#glance-hourly-sales-chart').easyPieChart({
+            lineWidth: 25,
+            animate: false,
+            scaleColor: false,
+            barColor: '#328742'
+        });
+
+        $('#glance-traffic-chart').easyPieChart({
+            lineWidth: 25,
+            animate: false,
+            scaleColor: false,
+            barColor: '#ED8591'
+        });

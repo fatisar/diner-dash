@@ -4,9 +4,8 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
-};
-
-exports.helloworld = function(req, res){
-    res.render('helloworld', { title: 'Hello, World!' });
+    res.render('index', {
+        title: 'DinerDash',
+        client: client
+    });
 };
