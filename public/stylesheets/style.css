@@ -1,8 +1,33 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: #504B4B;
 }
 
 a {
   color: #00B7FF;
+}
+
+.navbar-default .navbar-brand {
+    color: #C1C1EE;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #D9D9EC;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    background-color: rgba(200,200,200,0.5);
+}
+
+.welcome-name {
+    color: #D9D9EC;
+}
+
+.navbar-right {
+    padding-top: 25px;
+}
+
+.navbar-right>a {
+    padding-left: 10px;
 }

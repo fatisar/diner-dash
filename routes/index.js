@@ -5,7 +5,12 @@
 
 exports.index = function(req, res){
     res.render('index', {
-        title: 'DinerDash',
-        client: client
+        title: 'DinerDash'
     });
 };
+
+exports.signin = function(req, res) {
+    res.render('signin', {
+
+    })
+}

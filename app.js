@@ -8,6 +8,7 @@ var routes = require('./routes');
 var clients = require('./routes/clients')
 var dashboard = require('./routes/dashboard')
 var food = require('./routes/food')
+var menu = require('./routes/menu')
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
@@ -38,13 +39,18 @@ if ('development' == app.get('env')) {
 
 
 // load up the client's menus and store them globally for nav access
-client = {name: 'DeLuxe Bar and Grill'}
 var menuCollection = db.get('menus');
 menuCollection.find({},{},function(e,menus){
     app.locals({
-        'navmenus' : menus
+        navmenus : menus
     })
 });
+
+app.locals({
+    client : {
+        name: 'Guest'
+    }
+})
 
 app.get('/', routes.index);
 app.get('/food', food.menus);
@@ -52,8 +58,12 @@ app.get('/dashboard', dashboard.dashboard)
 app.get('/users', user.list);
 app.get('/clients', clients.clients(db));
 app.get('/newclient', clients.newclient);
+app.get('/signin', routes.signin);
+
+app.get('/menu/:menuId', [menu.loadMenu,  menu.loadMenuItems], menu.load);
+
 app.post('/addclient', clients.addclient(db));
 
-http.createServer(app).listen(app.get('port'), function(){
+app.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });

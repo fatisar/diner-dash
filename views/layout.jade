@@ -7,10 +7,8 @@ html
         meta(name='description', content='')
         meta(name='author', content='')
         link(rel='shortcut icon', href='../../assets/ico/favicon.ico')
-        link(rel='stylesheet', href='/stylesheets/style.css')
         // Bootstrap core CSS
         link(href='/stylesheets/bootstrap.min.css', rel='stylesheet')
-        link(href='/stylesheets/dashboard.css', rel='stylesheet')
 
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js')
         script(src='/javascripts/bootstrap.min.js')
@@ -20,6 +18,10 @@ html
         script(src="/javascripts/amcharts/pie.js", type="text/javascript")
         script(src="/javascripts/amcharts/themes/light.js", type="text/javascript")
         script(src="/javascripts/jquery.easypiechart.min.js", type="text/javascript")
+
+        link(href='/stylesheets/dashboard.css', rel='stylesheet')
+        link(href='/stylesheets/signin.css', rel='stylesheet')
+        link(rel='stylesheet', href='/stylesheets/style.css')
 
         title= title
     body
@@ -38,13 +40,13 @@ html
                             li#home-menu
                                 a(href='/') Home
                             li#food-menu.dropdown
-                                a.dropdown-toggle.disabled(href='food', data-toggle='dropdown')
+                                a.dropdown-toggle.disabled(href='/food', data-toggle='dropdown')
                                     | Food
                                     b.caret
                                 ul.dropdown-menu(role='nav-menu')
                                     each menu in navmenus
                                         li
-                                            a(href='menu/'+menu.id)= menu.title
+                                            a(href='/menu/'+menu.id)= menu.title
                                     li.divider
                                     li.dropdown-header Manage
                                     li
@@ -52,7 +54,7 @@ html
                                     li
                                         a(href='#') Create special discount
                             li#dashboard-menu.dropdown
-                                a.dropdown-toggle.disabled(href='dashboard', data-toggle='dropdown')
+                                a.dropdown-toggle.disabled(href='/dashboard', data-toggle='dropdown')
                                     | Data
                                     b.caret
                                 ul.dropdown-menu(role='nav-menu')
@@ -63,12 +65,11 @@ html
                                         a(href='/inventory/manage') Manage inventory
                                     li
                                         a(href='/data') Export data
-                        form.nav.navbar-form.navbar-right(role='form')
-                            .form-group
-                                input.form-control(type='text', placeholder='Email')
-                            .form-group
-                                input.form-control(type='password', placeholder='Password')
-                            button.btn.btn-success(type='submit') Sign in
+                        span.nav.navbar-nav.navbar-right
+                            span.welcome-name Welcome,
+                                = client.name
+                            a(href='/signin')
+                                span.glyphicon.glyphicon-user
         block content
         script.
             $(function() {

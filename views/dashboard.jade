@@ -41,11 +41,6 @@ block content
                         a(href='') Export data
 
             .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
-                .jumbotron
-                    .container
-                        h1 Just taking up space
-                        p Having trouble getting the margins/padding just right
-
                 div.section-buffer#glance
                     h1 At A Glance
                     p.bg-success.lead How are we doing today?
@@ -53,27 +48,31 @@ block content
                     .row.placeholders
                         .col-xs-6.col-sm-4.placeholder.clearfix
                             h4 Total daily sales
-                            span.chart
-                                span.glanceChart.percentage#glance-daily-sales-chart(data-percent="100")
-                                    span 1783
-                                span.text-muted Average for Monday's is $1378
+                            .chart
+                                .glanceChart.percentage#glance-daily-sales-chart(data-percent="100", data-bar-color=glance.dailySalesColor)
+                                    span $
+                                        = glance.dailySales
+                                span.text-muted Average for Monday's is $
+                                    = glance.averageDailySales
                         .col-xs-6.col-sm-4.placeholder
                             h4 Sales this hour
-                            span.chart
-                                span.glanceChart.percentage#glance-hourly-sales-chart(data-percent="100")
-                                    span 148
-                                span.text-muted Average for 12p - 1p is $137
+                            .chart
+                                .glanceChart.percentage#glance-hourly-sales-chart(data-percent="100", data-bar-color=glance.hourlySalesColor)
+                                    span $
+                                        = glance.hourlySales
+                                span.text-muted Average for 12p - 1p is $
+                                    = glance.averageHourlySales
                         .col-xs-6.col-sm-4.placeholder
                             h4 Customers this hour
-                            span.chart
-                                span.glanceChart.percentage#glance-traffic-chart(data-percent="100")
-                                    span 11
-                                span.text-muted Average for 12p - 1p is 14
-                    h2.sub-header Section title
+                            .chart
+                                .glanceChart.percentage#glance-traffic-chart(data-percent="100", data-bar-color=glance.hourlyCustomersColor)
+                                    span= glance.hourlyCustomers
+                                span.text-muted Average for 12p - 1p is&nbsp
+                                    = glance.averageHourlyCustomers
 
                 div.section-buffer#sales
                     h1 Sales
-                    p.bg-success.h2.lead Let's take a look at some sales numbers
+                    p.bg-success.h2.lead How are our numbers looking?
                     .page-header
                     .row.placeholders
                         .col-xs-6.col-sm-3.placeholder
@@ -152,23 +151,30 @@ block content
 
     script $('body').scrollspy({ target: '.sidebar', offset: 80});
     script.
+        $(function() {
         $('#glance-daily-sales-chart').easyPieChart({
             lineWidth: 25,
             animate: false,
-            scaleColor: false,
-            barColor: '#58CC6D'
+            scaleColor: false
         });
 
         $('#glance-hourly-sales-chart').easyPieChart({
             lineWidth: 25,
             animate: false,
-            scaleColor: false,
-            barColor: '#328742'
+            scaleColor: false
         });
 
         $('#glance-traffic-chart').easyPieChart({
             lineWidth: 25,
             animate: false,
-            scaleColor: false,
-            barColor: '#ED8591'
+            scaleColor: false
+        });
+        });
+    script.
+        $('a[href*=#]:not([href=#])').click(function() {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+            $('body').animate({
+                scrollTop: target.offset().top
+            }, 500);
         });
