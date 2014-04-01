@@ -35,19 +35,7 @@ exports.updateMenuItem = function(req, res, next) {
 
     var updatedMenuItem = req.body;
 
-    db.collection(menuId).findOne({id: menuItemId}, function(err, item) {
-        console.log("err:"+err);
-        console.log("val:"+item.ingredients);
-    });
-    updatedMenuItem.ingredients = null;
-    updatedMenuItem.nutrition = null;
-    console.log('updated:'+updatedMenuItem.ingredients);
-
-//    db.collection(menuId).update({id:menuItemId}, updatedMenuItem, function() {
-//        console.log("updated item " + menuItemId);
-//    });
-    db.collection(menuId).save(updatedMenuItem, function(err, val) {
-        console.log("err:"+err);
-        console.log("val:"+val.name);
+    db.collection(menuId).update({id:menuItemId}, updatedMenuItem, {upsert: true}, function() {
+        console.log("updated item " + menuItemId);
     });
 }

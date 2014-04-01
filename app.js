@@ -4,6 +4,11 @@
  */
 
 var express = require('express');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+
 var routes = require('./routes');
 var clients = require('./routes/clients')
 var dashboard = require('./routes/dashboard')
@@ -22,35 +27,20 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
-app.use(app.router);
+app.use(methodOverride());
+app.use(bodyParser());
+app.use(cookieParser('your secret here'));
+app.use(session());
 app.use(express.static(path.join(__dirname, 'public')));
-
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
 
 
 // load up the client's menus and store them globally for nav access
 var menuCollection = db.get('menus');
 menuCollection.find({},{},function(e,menus){
-    app.locals({
-        navmenus : menus
-    })
+    app.locals.navmenus = menus;
 });
 
-app.locals({
-    client : {
-        name: 'Guest'
-    }
-})
+app.locals.client = { name: 'Guest' }
 
 app.get('/', routes.index);
 app.get('/food', food.menus);

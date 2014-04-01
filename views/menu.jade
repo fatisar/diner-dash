@@ -27,12 +27,12 @@ block content
             h1.title= menu.title
             .menu-items
                 div(data-bind="foreach: items")
-                    .row.menu-item
+                    .row.menu-item(data-bind="attr:{ itemid: id }")
                         .col-md-3
                             img.menu-item-image(data-bind="attr:{ src: image }")
                         .col-md-9.menu-item-content
                             span.h3.editable(data-bind="editableText: name")
-                            p.editable(data-bind="text: price")
+                            p.editable(data-bind="editableText: price")
                             .row.menu-item-description
                                 .col-md-6.scrollable
                                     ul.menu-item-ingredients(data-bind="foreach: {data: ingredients, as: 'ingredient'}")
@@ -96,17 +96,24 @@ block content
                 if (e.which != 13) {
                     return true;
                 } else {
-                    console.log("model:" + ko.toJSON(model.items()[0]));
                     this.blur();
-                    var self = this;
-                    var id = "";
-                    var i = 0;
-                    $.each(model.items(), function(i, item) {
-                        console.log("name:["+item.name()+"] == ["+self.innerHTML+"]");
-                        if (item.name().toString() == self.innerHTML) { id = item.id(); i = 0; console.log("got'em");}
+                    var id = $(this).closest(".menu-item").attr("itemid");
+
+                    var updatedMenuItem = null;
+                    $(ko.toJS(model.items())).each(function(index, menuItem) {
+                        if(menuItem.id == id) updatedMenuItem = menuItem;
                     });
-                    console.log("this:" + this.innerHTML);
-                    $.post('/menu/#{menu.id}/update/'+id, model.items()[i]);
+
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/menu/#{menu.id}/update/'+id,
+                        data: updatedMenuItem,
+                        dataType: 'json',
+                        complete: function(validationResponse) {
+
+                        }
+                    });
                     return false;
                 }
             });
