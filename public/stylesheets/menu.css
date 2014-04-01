@@ -1,20 +1,33 @@
 .menu-item {
-    margin: 5px;
     border:1px solid #a1a1a1;
-    height: 200px;
+    height: 10em;
     overflow: hidden;
+    display: flex;
+    margin-bottom: 5px;
+    background-color: #eeeeee;
 }
 
-.menu-item-ingredients {
+.menu-item-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.menu-item-description {
+    display: flex;
+    flex: 1;
+}
+
+.scrollable {
+    flex: 1;
     overflow: scroll;
-    height: 200px;
 }
 
 .menu-item-image {
-    width: 150px;
-    height: auto;
+    height: 10em;
+    width: auto;
 }
 
 .editable:hover {
-    border:1px dotted #a1a1a1;
+    color: #808080;
 }

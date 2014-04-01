@@ -15,7 +15,6 @@ exports.load = function(req, res) {
 exports.loadMenu = function(req, res, next) {
     var menuId = req.params['menuId'];
     db.collection('menus').findOne({id: menuId}, function(err, menu) {
-        console.log("menu:" + JSON.stringify(menu));
         req.menu = menu;
         next();
     });
@@ -25,8 +24,30 @@ exports.loadMenuItems = function(req, res, next) {
     var menuId = req.params['menuId'];
 
     db.collection(menuId).find(function(err, items) {
-        console.log("menu item:" + JSON.stringify(items));
         req.items = items;
         next();
+    });
+}
+
+exports.updateMenuItem = function(req, res, next) {
+    var menuId = req.params['menuId'];
+    var menuItemId = req.params['menuItemId'];
+
+    var updatedMenuItem = req.body;
+
+    db.collection(menuId).findOne({id: menuItemId}, function(err, item) {
+        console.log("err:"+err);
+        console.log("val:"+item.ingredients);
+    });
+    updatedMenuItem.ingredients = null;
+    updatedMenuItem.nutrition = null;
+    console.log('updated:'+updatedMenuItem.ingredients);
+
+//    db.collection(menuId).update({id:menuItemId}, updatedMenuItem, function() {
+//        console.log("updated item " + menuItemId);
+//    });
+    db.collection(menuId).save(updatedMenuItem, function(err, val) {
+        console.log("err:"+err);
+        console.log("val:"+val.name);
     });
 }

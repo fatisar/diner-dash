@@ -26,35 +26,88 @@ block content
         .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
             h1.title= menu.title
             .menu-items
-                each item in items
+                div(data-bind="foreach: items")
                     .row.menu-item
                         .col-md-3
-                            img.menu-item-image(src= item.image)
-                        .col-md-9
-                            span.h3.editable= item.name
-                            p= item.price
-                            .row
-                                .col-md-6.menu-item-header
-                                    p.menu-item-ingredients= item.ingredients
-                                .col-md-6.menu-item-description
-                                    - var nutrition = item.nutrition
+                            img.menu-item-image(data-bind="attr:{ src: image }")
+                        .col-md-9.menu-item-content
+                            span.h3.editable(data-bind="editableText: name")
+                            p.editable(data-bind="text: price")
+                            .row.menu-item-description
+                                .col-md-6.scrollable
+                                    ul.menu-item-ingredients(data-bind="foreach: {data: ingredients, as: 'ingredient'}")
+                                            li.editable.menu-item-ingredient(data-bind="text: ingredient")
+                                        li.new-menu-item-ingredient.editable Click to add new ingredient
+                                .col-md-6
                                     .nutrition-item
                                         span.nutrition-name Calories
-                                        span.nutition-value= nutrition.calories
+                                        span.nutition-value(data-bind="text: nutrition.calories")
                                     .nutrition-item
                                         span.nutrition-name Fat
-                                        span.nutition-value= nutrition.fat
+                                        span.nutition-value(data-bind="text: nutrition.fat")
                                     .nutrition-item
                                         span.nutrition-name Protein
-                                        span.nutition-value= nutrition.protein
+                                        span.nutition-value(data-bind="text: nutrition.protein")
+
 
     script.
-        $(".editable").attr("contenteditable","true");
-        $(".editable").keypress(function(e){
-            if (e.which != 13) {
-                return true;
-            } else {
-                $(".editable").blur();
-                return false;
+        $(function() {
+            $(".editable").attr("contenteditable","true");
+
+            function MenuItem(data) {
+                var self = this;
+                self.name = ko.observable(data.name);
+                self.id = ko.observable(data.id);
+                self.ingredients = ko.observable(data.ingredients);
+                self.price = ko.observable(data.price);
+                self.image = data.image;
+                self.nutrition = data.nutrition;
             }
+
+            function ViewModel() {
+                var self = this;
+                self.items = ko.observableArray();
+                $.each(!{JSON.stringify(items)}, function(index, item) {
+                    self.items.push(new MenuItem(item));
+                    console.log("in:"+item);
+                });
+            }
+
+            var model = new ViewModel();
+
+            ko.bindingHandlers.editableText = {
+                init: function(element, valueAccessor) {
+                    $(element).on('blur', function() {
+                        var observable = valueAccessor();
+                        observable( $(this).text() );
+                        console.log("sup:"+$(this).text());
+                    });
+                },
+                update: function(element, valueAccessor) {
+                    var value = ko.utils.unwrapObservable(valueAccessor());
+                    $(element).text(value);
+                    console.log("value:"+value);
+                }
+            };
+
+            ko.applyBindings(model);
+
+            $(".editable").keypress(function(e){
+                if (e.which != 13) {
+                    return true;
+                } else {
+                    console.log("model:" + ko.toJSON(model.items()[0]));
+                    this.blur();
+                    var self = this;
+                    var id = "";
+                    var i = 0;
+                    $.each(model.items(), function(i, item) {
+                        console.log("name:["+item.name()+"] == ["+self.innerHTML+"]");
+                        if (item.name().toString() == self.innerHTML) { id = item.id(); i = 0; console.log("got'em");}
+                    });
+                    console.log("this:" + this.innerHTML);
+                    $.post('/menu/#{menu.id}/update/'+id, model.items()[i]);
+                    return false;
+                }
+            });
         });

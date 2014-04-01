@@ -61,6 +61,7 @@ app.get('/newclient', clients.newclient);
 app.get('/signin', routes.signin);
 
 app.get('/menu/:menuId', [menu.loadMenu,  menu.loadMenuItems], menu.load);
+app.post('/menu/:menuId/update/:menuItemId', [menu.updateMenuItem, menu.loadMenu,  menu.loadMenuItems], menu.load);
 
 app.post('/addclient', clients.addclient(db));
 
