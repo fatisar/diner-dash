@@ -1,0 +1,20 @@
+.menu-item {
+    margin: 5px;
+    border:1px solid #a1a1a1;
+    height: 200px;
+    overflow: hidden;
+}
+
+.menu-item-ingredients {
+    overflow: scroll;
+    height: 200px;
+}
+
+.menu-item-image {
+    width: 150px;
+    height: auto;
+}
+
+.editable:hover {
+    border:1px dotted #a1a1a1;
+}

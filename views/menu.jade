@@ -3,8 +3,58 @@
 extends layout
 
 block content
-    h1= menu.title
-    each item in items
-        p= item.name
-        p= item.price
-        img(src= item.image)
+    .row
+        .col-sm-3.col-md-2.sidebar
+            ul.nav.nav-sidebar
+                each navmenu in navmenus
+                    if menu.id == navmenu.id
+                        li.sidebar-item.active
+                            a(href='/menu/' + navmenu .id)
+                                span.glyphicon.glyphicon-cutlery
+                                span= navmenu .title
+                    else
+                        li.sidebar-item
+                            a(href='/menu/' + navmenu .id)
+                                span.glyphicon.glyphicon-cutlery
+                                span= navmenu .title
+            ul.nav.nav-sidebar
+                li.sidebar-item.page-header
+                li.sidebar-item
+                    a(href='') Add new menu
+                li.sidebar-item
+                    a(href='') Create special discount
+        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+            h1.title= menu.title
+            .menu-items
+                each item in items
+                    .row.menu-item
+                        .col-md-3
+                            img.menu-item-image(src= item.image)
+                        .col-md-9
+                            span.h3.editable= item.name
+                            p= item.price
+                            .row
+                                .col-md-6.menu-item-header
+                                    p.menu-item-ingredients= item.ingredients
+                                .col-md-6.menu-item-description
+                                    - var nutrition = item.nutrition
+                                    .nutrition-item
+                                        span.nutrition-name Calories
+                                        span.nutition-value= nutrition.calories
+                                    .nutrition-item
+                                        span.nutrition-name Fat
+                                        span.nutition-value= nutrition.fat
+                                    .nutrition-item
+                                        span.nutrition-name Protein
+                                        span.nutition-value= nutrition.protein
+
+    script.
+        $(".editable").attr("contenteditable","true");
+        $(".editable").keypress(function(e){
+            if (e.which != 13) {
+                return true;
+            } else {
+                $(".editable").blur();
+                return false;
+            }
+        });

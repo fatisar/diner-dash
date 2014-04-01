@@ -20,6 +20,10 @@ a {
     background-color: rgba(200,200,200,0.5);
 }
 
+.sidebar-item>a {
+    color: black;
+}
+
 .welcome-name {
     color: #D9D9EC;
 }
