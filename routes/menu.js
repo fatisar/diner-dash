@@ -3,7 +3,7 @@
  */
 
 var mongojs = require('mongojs');
-var db = mongojs('dinerdash');
+var db = mongojs('mongodb://test:test@ds033669.mongolab.com:33669/dinerdash');
 
 exports.load = function(req, res) {
     res.render('menu', {

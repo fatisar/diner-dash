@@ -18,8 +18,8 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 
-var monk = require('monk');
-var db = monk('localhost:27017/dinerdash');
+var mongojs = require('mongojs');
+var db = mongojs('mongodb://test:test@ds033669.mongolab.com:33669/dinerdash');
 
 var app = express();
 
@@ -35,8 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // load up the client's menus and store them globally for nav access
-var menuCollection = db.get('menus');
-menuCollection.find({},{},function(e,menus){
+db.collection('menus').find({},{},function(e,menus){
     app.locals.navmenus = menus;
 });
 

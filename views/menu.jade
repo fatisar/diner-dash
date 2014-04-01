@@ -69,7 +69,6 @@ block content
                 self.items = ko.observableArray();
                 $.each(!{JSON.stringify(items)}, function(index, item) {
                     self.items.push(new MenuItem(item));
-                    console.log("in:"+item);
                 });
             }
 
@@ -80,13 +79,11 @@ block content
                     $(element).on('blur', function() {
                         var observable = valueAccessor();
                         observable( $(this).text() );
-                        console.log("sup:"+$(this).text());
                     });
                 },
                 update: function(element, valueAccessor) {
                     var value = ko.utils.unwrapObservable(valueAccessor());
                     $(element).text(value);
-                    console.log("value:"+value);
                 }
             };
 
